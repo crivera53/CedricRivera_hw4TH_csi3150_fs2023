@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .filters {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .filters label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filters input[type="number"],
+        .filters select,
+        .filters input[type="dropdown"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .car-listings {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            width: 30%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <title>Used Car Sales</title>
+</head>
+<body>
+    <header>
+        <h1>Used Car Sales</h1>
+    </header>
+    <div class="filters">
+        <label for="min-year">Min. Year:</label>
+        <input type="number" id="min-year" min="1900" max="2023" step="1" value="2000">
+        <label for="max-year">Max. Year:</label>
+        <input type="number" id="max-year" min="1900" max="2023" step="1" value="2023">
+        <label>Make:</label>
+        <label><input type="checkbox" name="make" value="Toyota">Toyota</label>
+        <label><input type="checkbox" name="make" value="Honda">Honda</label>
+        <label><input type="checkbox" name="make" value="Ford">Ford</label>
+        <label><input type="checkbox" name="make" value="Nissan">Nissan</label>
+        <label><input type="checkbox" name="make" value="Chevrolet">Chevrolet</label>
+        <label><input type="checkbox" name="make" value="Volkswagen">Volkswagen</label>
+        <label><input type="checkbox" name="make" value="Hyundai">Hyundai</label>
+        <label><input type="checkbox" name="make" value="Kia">Kia</label>
+        <label><input type="checkbox" name="make" value="Mazda">Mazda</label>
+        <label><input type="checkbox" name="make" value="Dodge">Dodge</label>
+        <label><input type="checkbox" name="make" value="Subaru">Subaru</label>
+        <label><input type="checkbox" name="make" value="Cadillac">Cadillac</label>
+        <label><input type="checkbox" name="make" value="Jaguar">Jaguar</label>
+        <label><input type="checkbox" name="make" value="Tesla">Tesla</label>
+        <label><input type="checkbox" name="make" value="BMW">BMW</label>
+        <label><input type="checkbox" name="make" value="Lexus">Lexus</label>
+        <label><input type="checkbox" name="make" value="Porsche">Porsche</label>
+        <label for="max-mileage">Max. Mileage:</label>
+        <input type="number" id="max-mileage" min="0" step="1000" value="100000">
+        <label for="max-price">Max. Price:</label>
+        <input type="number" id="max-price" min="0" step="1000" value="100000">
+        <label>Color:</label>
+        <label><input type="checkbox" name="color" value="Silver">Silver</label>
+        <label><input type="checkbox" name="color" value="White">White</label>
+        <label><input type="checkbox" name="color" value="Black">Black</label>
+        <label><input type="checkbox" name="color" value="Blue">Blue</label>
+        <label><input type="checkbox" name="color" value="Red">Red</label>
+        <label><input type="checkbox" name="color" value="Gray">Gray</label>
+        <label><input type="checkbox" name="color" value="Green">Green</label>
+        <button id="filter-button">Filter</button>
+    </div>
+    <div class="car-listings">
+    </div>
+    <script>
+            const usedCars = [
+    {
+        year: 2018,
+        make: "Toyota",
+        model: "Camry",
+        mileage: 30000,
+        price: 18000,
+        color: "Silver",
+        gasMileage: "25 mpg city, 35 mpg highway",
+    },
+    {
+        year: 2016,
+        make: "Honda",
+        model: "Civic",
+        mileage: 45000,
+        price: 14000,
+        color: "White",
+        gasMileage: "30 mpg city, 40 mpg highway",
+    },
+    {
+        year: 2017,
+        make: "Ford",
+        model: "Fusion",
+        mileage: 35000,
+        price: 16000,
+        color: "Black",
+        gasMileage: "28 mpg city, 38 mpg highway",
+    },
+    {
+        year: 2019,
+        make: "Nissan",
+        model: "Altima",
+        mileage: 25000,
+        price: 17000,
+        color: "Blue",
+        gasMileage: "27 mpg city, 36 mpg highway",
+    },
+    {
+        year: 2015,
+        make: "Chevrolet",
+        model: "Malibu",
+        mileage: 50000,
+        price: 12000,
+        color: "Red",
+        gasMileage: "25 mpg city, 37 mpg highway",
+    },
+    {
+        year: 2016,
+        make: "Volkswagen",
+        model: "Passat",
+        mileage: 40000,
+        price: 15000,
+        color: "Gray",
+        gasMileage: "29 mpg city, 40 mpg highway",
+    },
+    {
+        year: 2020,
+        make: "Hyundai",
+        model: "Elantra",
+        mileage: 22000,
+        price: 16000,
+        color: "Silver",
+        gasMileage: "30 mpg city, 41 mpg highway",
+    },
+    {
+        year: 2014,
+        make: "Subaru",
+        model: "Outback",
+        mileage: 60000,
+        price: 14000,
+        color: "Green",
+        gasMileage: "22 mpg city, 30 mpg highway",
+    },
+    {
+        year: 2017,
+        make: "Mazda",
+        model: "CX-5",
+        mileage: 32000,
+        price: 19000,
+        color: "Blue",
+        gasMileage: "24 mpg city, 31 mpg highway",
+    },
+    {
+        year: 2018,
+        make: "Kia",
+        model: "Sorento",
+        mileage: 28000,
+        price: 17000,
+        color: "White",
+        gasMileage: "22 mpg city, 29 mpg highway",
+    },
+    {
+        year: 2015,
+        make: "Dodge",
+        model: "Challenger",
+        mileage: 30000,
+        price: 24000,
+        color: "Black",
+        gasMileage: "19 mpg city, 30 mpg highway",
+    },
+    {
+        year: 2017,
+        make: "Cadillac",
+        model: "XT5",
+        mileage: 28000,
+        price: 32000,
+        color: "Red",
+        gasMileage: "19 mpg city, 27 mpg highway",
+    },
+    {
+        year: 2018,
+        make: "Jaguar",
+        model: "F-PACE",
+        mileage: 26000,
+        price: 38000,
+        color: "Blue",
+        gasMileage: "18 mpg city, 23 mpg highway",
+    },
+    {
+        year: 2019,
+        make: "Tesla",
+        model: "Model S",
+        mileage: 18000,
+        price: 55000,
+        color: "Black",
+        gasMileage: "Electric (370 miles per charge)",
+    },
+    {
+        year: 2020,
+        make: "Porsche",
+        model: "Cayenne",
+        mileage: 22000,
+        price: 68000,
+        color: "White",
+        gasMileage: "20 mpg city, 26 mpg highway",
+    },
+    {
+        year: 2017,
+        make: "Lexus",
+        model: "ES",
+        mileage: 29000,
+        price: 26000,
+        color: "White",
+        gasMileage: "21 mpg city, 30 mpg highway",
+    },
+    {
+        year: 2016,
+        make: "BMW",
+        model: "5 Series",
+        mileage: 32000,
+        price: 27000,
+        color: "Black",
+        gasMileage: "23 mpg city, 34 mpg highway",
+    },
+    {
+        year: 2016,
+        make: "BMW",
+        model: "X5",
+        mileage: 32000,
+        price: 65000,
+        color: "Black",
+        gasMileage: "23 mpg city, 29 mpg highway",
+    }
+
+    ];
+
+        function displayCarListings(cars) {
+            const carListings = document.querySelector(".car-listings");
+            carListings.innerHTML = "";
+
+            if (cars.length === 0) {
+                carListings.innerHTML = "<p>No cars match your criteria. Please try again.</p>";
+            } else {
+                cars.forEach((car) => {
+                    const card = document.createElement("div");
+                    card.classList.add("card");
+                    card.innerHTML = `
+                        <h2>${car.make} ${car.model}</h2>
+                        <p>Year: ${car.year}</p>
+                        <p>Mileage: ${car.mileage} miles</p>
+                        <p>Price: $${car.price}</p>
+                        <p>Color: ${car.color}</p>
+                        <p>Gas Mileage: ${car.gasMileage}</p>
+                    `;
+                    carListings.appendChild(card);
+                });
+            }
+        }
+
+        function filterCars() {
+            const minYear = parseInt(document.querySelector("#min-year").value);
+            const maxYear = parseInt(document.querySelector("#max-year").value);
+            const selectedMakes = Array.from(document.querySelectorAll("input[name='make']:checked")).map(checkbox => checkbox.value);
+            const maxMileage = parseInt(document.querySelector("#max-mileage").value);
+            const maxPrice = parseInt(document.querySelector("#max-price").value);
+            const selectedColors = Array.from(document.querySelectorAll("input[name='color']:checked")).map(checkbox => checkbox.value);
+
+            const filteredCars = usedCars.filter((car) => {
+                return car.year >= minYear &&
+                    car.year <= maxYear &&
+                    (selectedMakes.length === 0 || selectedMakes.includes(car.make)) &&
+                    car.mileage <= maxMileage &&
+                    car.price <= maxPrice &&
+                    (selectedColors.length === 0 || selectedColors.includes(car.color));
+            });
+
+            displayCarListings(filteredCars);
+        }
+
+        document.querySelector("#filter-button").addEventListener("click", filterCars);
+
+        displayCarListings(usedCars);
+    </script>
+</body>
+</html>
